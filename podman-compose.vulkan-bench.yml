@@ -1,0 +1,50 @@
+# podman-compose.vulkan-bench.yml
+#
+# Container service for benchmarking the official llama.cpp Vulkan build.
+# Used by run-vulkan-amd-bench.sh but can also be used interactively:
+#
+#   podman-compose -f podman-compose.vulkan-bench.yml up -d
+#   podman exec llamacpp_bench-vulkan_1 /app/llama-bench \
+#       -m /models/bartowski/Qwen2.5-Coder-7B-Instruct-Q4_K_M.gguf \
+#       -ngl 99 -fa "0,1" -pg "512,128" -r 3 -o jsonl
+#   podman-compose -f podman-compose.vulkan-bench.yml down
+#
+# AMD GPU access: /dev/dri passthrough (DRI device files, no CDI needed)
+# VK_ICD_FILENAMES restricts Vulkan to RADV (AMD) only — prevents NVIDIA ICD
+# from being selected if the container also has NVIDIA libs present.
+#
+# Container image: full-vulkan-b<build_number>
+# b4927 is the latest published Vulkan tag as of 2026-06-03.
+# Note: Vulkan and CUDA container builds use independent build counters.
+# To use a different version, set LLAMA_VULKAN_IMAGE env var before running.
+
+services:
+  bench-vulkan:
+    image: ${LLAMA_VULKAN_IMAGE:-ghcr.io/ggml-org/llama.cpp:full-vulkan}
+    volumes:
+      # SSD models (7B, 9B); paths inside container: /models_ssd/bartowski/...
+      - /mnt/512_ssd_internal/vai-llm-tei/llm-models:/models_ssd:ro
+      # External drive models (27B Q3_K_XL); paths: /models_ext/unsloth/...
+      - /run/media/none/1d178b00-4086-4162-ba58-a602ac516109/downloads:/models_ext:ro
+    devices:
+      # AMD DRI passthrough — card1/renderD129 are the 780M iGPU on this system.
+      # (card0/renderD128 are the NVIDIA RTX 4060; card1/renderD129 are AMD.)
+      - /dev/dri/card1
+      - /dev/dri/renderD129
+    security_opt:
+      - label=disable
+    environment:
+      # RADV ICD only — prevents NVIDIA Vulkan from being enumerated
+      # full-vulkan image uses radeon_icd.json (no x86_64 suffix)
+      - VK_ICD_FILENAMES=/usr/share/vulkan/icd.d/radeon_icd.json
+      # Suppress CUDA/ROCR so the NVIDIA runtime doesn't interfere
+      - CUDA_VISIBLE_DEVICES=
+      - ROCR_VISIBLE_DEVICES=
+      - HIP_VISIBLE_DEVICES=
+    # Override /app/tools.sh with sleep so 'up -d' keeps the container alive.
+    # The actual llama-bench binary is at /app/llama-bench.
+    # Run bench commands against the live container with exec:
+    #   podman exec llamacpp_bench-vulkan_1 /app/llama-bench \
+    #       -m /models/bartowski/Qwen2.5-Coder-7B-Instruct-Q4_K_M.gguf \
+    #       -ngl 99 -fa "0,1" -pg "512,128" -r 3 -o jsonl
+    entrypoint: ["sleep", "infinity"]

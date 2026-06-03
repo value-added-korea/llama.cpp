@@ -1,0 +1,379 @@
+{
+  "metadata": {
+    "date": "2026-06-02T12:37:16.841881+00:00",
+    "host": "borlangy.vai.internal",
+    "os": "Linux-7.0.0-22-generic-x86_64-with-glibc2.43",
+    "cpu": "AMD Ryzen 7 8845HS w/ Radeon 780M Graphics",
+    "rocm_version": "7.13.0.0-9999-3309c611",
+    "gpu": [
+      {
+        "rocm_smi": "card0,AMD Radeon 780M Graphics,0x1900,Advanced Micro Devices Inc. [AMD/ATI],PHXGENERIC,0x3598,0xc5,1,40102,gfx1103"
+      }
+    ],
+    "model": "qwen2.5-coder-7b-instruct-q4_k_m.gguf",
+    "model_path": "/mnt/512_ssd_internal/vai-llm-tei/llm-models/qwen2.5-coder-7b-instruct-q4_k_m.gguf"
+  },
+  "builds": {
+    "cpu-aocc": {
+      "binary": "build-cpu-aocc/bin/llama-bench",
+      "raw_jsonl": "/home/none/git/ROCM_llama-server-gfx1103/llama.cpp/bench_raw/cpu-aocc.jsonl",
+      "raw_log": "/home/none/git/ROCM_llama-server-gfx1103/llama.cpp/bench_raw/cpu-aocc.jsonl.log"
+    },
+    "vulkan-aocc": {
+      "binary": "build-vulkan-aocc/bin/llama-bench",
+      "raw_jsonl": "/home/none/git/ROCM_llama-server-gfx1103/llama.cpp/bench_raw/vulkan-aocc.jsonl",
+      "raw_log": "/home/none/git/ROCM_llama-server-gfx1103/llama.cpp/bench_raw/vulkan-aocc.jsonl.log"
+    },
+    "rocm-aocc": {
+      "binary": "build-rocm-aocc/bin/llama-bench",
+      "raw_jsonl": "/home/none/git/ROCM_llama-server-gfx1103/llama.cpp/bench_raw/rocm-aocc.jsonl",
+      "raw_log": "/home/none/git/ROCM_llama-server-gfx1103/llama.cpp/bench_raw/rocm-aocc.jsonl.log"
+    }
+  },
+  "results": {
+    "cpu-aocc": [
+      {
+        "build_commit": "e22b0de60",
+        "build_number": 9449,
+        "cpu_info": "AMD Ryzen 7 8845HS w/ Radeon 780M Graphics",
+        "gpu_info": "",
+        "backends": "CPU",
+        "model_filename": "/mnt/512_ssd_internal/vai-llm-tei/llm-models/qwen2.5-coder-7b-instruct-q4_k_m.gguf",
+        "model_type": "qwen2 7B Q4_K - Medium",
+        "model_size": 4677120000,
+        "model_n_params": 7615616512,
+        "n_batch": 2048,
+        "n_ubatch": 512,
+        "n_threads": 8,
+        "cpu_mask": "0x0",
+        "cpu_strict": false,
+        "poll": 50,
+        "type_k": "f16",
+        "type_v": "f16",
+        "n_gpu_layers": 0,
+        "n_cpu_moe": 0,
+        "split_mode": "layer",
+        "main_gpu": 0,
+        "no_kv_offload": false,
+        "flash_attn": -1,
+        "devices": "auto",
+        "tensor_split": "0.00",
+        "tensor_buft_overrides": "none",
+        "use_mmap": true,
+        "use_direct_io": false,
+        "embeddings": false,
+        "no_op_offload": 0,
+        "no_host": false,
+        "fit_target": 0,
+        "fit_min_ctx": 0,
+        "n_prompt": 32,
+        "n_gen": 0,
+        "n_depth": 0,
+        "test_time": "2026-06-02T12:37:06Z",
+        "avg_ns": 355908819,
+        "stddev_ns": 0,
+        "avg_ts": 89.910669,
+        "stddev_ts": 0.0,
+        "samples_ns": [
+          355908819
+        ],
+        "samples_ts": [
+          89.9107
+        ]
+      },
+      {
+        "build_commit": "e22b0de60",
+        "build_number": 9449,
+        "cpu_info": "AMD Ryzen 7 8845HS w/ Radeon 780M Graphics",
+        "gpu_info": "",
+        "backends": "CPU",
+        "model_filename": "/mnt/512_ssd_internal/vai-llm-tei/llm-models/qwen2.5-coder-7b-instruct-q4_k_m.gguf",
+        "model_type": "qwen2 7B Q4_K - Medium",
+        "model_size": 4677120000,
+        "model_n_params": 7615616512,
+        "n_batch": 2048,
+        "n_ubatch": 512,
+        "n_threads": 8,
+        "cpu_mask": "0x0",
+        "cpu_strict": false,
+        "poll": 50,
+        "type_k": "f16",
+        "type_v": "f16",
+        "n_gpu_layers": 0,
+        "n_cpu_moe": 0,
+        "split_mode": "layer",
+        "main_gpu": 0,
+        "no_kv_offload": false,
+        "flash_attn": -1,
+        "devices": "auto",
+        "tensor_split": "0.00",
+        "tensor_buft_overrides": "none",
+        "use_mmap": true,
+        "use_direct_io": false,
+        "embeddings": false,
+        "no_op_offload": 0,
+        "no_host": false,
+        "fit_target": 0,
+        "fit_min_ctx": 0,
+        "n_prompt": 0,
+        "n_gen": 16,
+        "n_depth": 0,
+        "test_time": "2026-06-02T12:37:06Z",
+        "avg_ns": 1926284925,
+        "stddev_ns": 0,
+        "avg_ts": 8.306144,
+        "stddev_ts": 0.0,
+        "samples_ns": [
+          1926284925
+        ],
+        "samples_ts": [
+          8.30614
+        ]
+      }
+    ],
+    "vulkan-aocc": [
+      {
+        "build_commit": "e22b0de60",
+        "build_number": 9449,
+        "cpu_info": "AMD Ryzen 7 8845HS w/ Radeon 780M Graphics",
+        "gpu_info": "AMD Radeon 780M Graphics (RADV PHOENIX)",
+        "backends": "Vulkan",
+        "model_filename": "/mnt/512_ssd_internal/vai-llm-tei/llm-models/qwen2.5-coder-7b-instruct-q4_k_m.gguf",
+        "model_type": "qwen2 7B Q4_K - Medium",
+        "model_size": 4677120000,
+        "model_n_params": 7615616512,
+        "n_batch": 2048,
+        "n_ubatch": 512,
+        "n_threads": 8,
+        "cpu_mask": "0x0",
+        "cpu_strict": false,
+        "poll": 50,
+        "type_k": "f16",
+        "type_v": "f16",
+        "n_gpu_layers": 999,
+        "n_cpu_moe": 0,
+        "split_mode": "layer",
+        "main_gpu": 0,
+        "no_kv_offload": false,
+        "flash_attn": -1,
+        "devices": "auto",
+        "tensor_split": "0.00",
+        "tensor_buft_overrides": "none",
+        "use_mmap": true,
+        "use_direct_io": false,
+        "embeddings": false,
+        "no_op_offload": 0,
+        "no_host": false,
+        "fit_target": 0,
+        "fit_min_ctx": 0,
+        "n_prompt": 32,
+        "n_gen": 0,
+        "n_depth": 0,
+        "test_time": "2026-06-02T12:37:09Z",
+        "avg_ns": 159478543,
+        "stddev_ns": 0,
+        "avg_ts": 200.653953,
+        "stddev_ts": 0.0,
+        "samples_ns": [
+          159478543
+        ],
+        "samples_ts": [
+          200.654
+        ]
+      },
+      {
+        "build_commit": "e22b0de60",
+        "build_number": 9449,
+        "cpu_info": "AMD Ryzen 7 8845HS w/ Radeon 780M Graphics",
+        "gpu_info": "AMD Radeon 780M Graphics (RADV PHOENIX)",
+        "backends": "Vulkan",
+        "model_filename": "/mnt/512_ssd_internal/vai-llm-tei/llm-models/qwen2.5-coder-7b-instruct-q4_k_m.gguf",
+        "model_type": "qwen2 7B Q4_K - Medium",
+        "model_size": 4677120000,
+        "model_n_params": 7615616512,
+        "n_batch": 2048,
+        "n_ubatch": 512,
+        "n_threads": 8,
+        "cpu_mask": "0x0",
+        "cpu_strict": false,
+        "poll": 50,
+        "type_k": "f16",
+        "type_v": "f16",
+        "n_gpu_layers": 999,
+        "n_cpu_moe": 0,
+        "split_mode": "layer",
+        "main_gpu": 0,
+        "no_kv_offload": false,
+        "flash_attn": -1,
+        "devices": "auto",
+        "tensor_split": "0.00",
+        "tensor_buft_overrides": "none",
+        "use_mmap": true,
+        "use_direct_io": false,
+        "embeddings": false,
+        "no_op_offload": 0,
+        "no_host": false,
+        "fit_target": 0,
+        "fit_min_ctx": 0,
+        "n_prompt": 0,
+        "n_gen": 16,
+        "n_depth": 0,
+        "test_time": "2026-06-02T12:37:10Z",
+        "avg_ns": 1111682260,
+        "stddev_ns": 0,
+        "avg_ts": 14.392602,
+        "stddev_ts": 0.0,
+        "samples_ns": [
+          1111682260
+        ],
+        "samples_ts": [
+          14.3926
+        ]
+      }
+    ],
+    "rocm-aocc": [
+      {
+        "build_commit": "e22b0de60",
+        "build_number": 9449,
+        "cpu_info": "AMD Ryzen 7 8845HS w/ Radeon 780M Graphics",
+        "gpu_info": "AMD Radeon 780M Graphics",
+        "backends": "ROCm",
+        "model_filename": "/mnt/512_ssd_internal/vai-llm-tei/llm-models/qwen2.5-coder-7b-instruct-q4_k_m.gguf",
+        "model_type": "qwen2 7B Q4_K - Medium",
+        "model_size": 4677120000,
+        "model_n_params": 7615616512,
+        "n_batch": 2048,
+        "n_ubatch": 512,
+        "n_threads": 8,
+        "cpu_mask": "0x0",
+        "cpu_strict": false,
+        "poll": 50,
+        "type_k": "f16",
+        "type_v": "f16",
+        "n_gpu_layers": 10,
+        "n_cpu_moe": 0,
+        "split_mode": "layer",
+        "main_gpu": 0,
+        "no_kv_offload": false,
+        "flash_attn": -1,
+        "devices": "auto",
+        "tensor_split": "0.00",
+        "tensor_buft_overrides": "none",
+        "use_mmap": true,
+        "use_direct_io": false,
+        "embeddings": false,
+        "no_op_offload": 0,
+        "no_host": false,
+        "fit_target": 0,
+        "fit_min_ctx": 0,
+        "n_prompt": 32,
+        "n_gen": 0,
+        "n_depth": 0,
+        "test_time": "2026-06-02T12:37:12Z",
+        "avg_ns": 327896787,
+        "stddev_ns": 0,
+        "avg_ts": 97.591685,
+        "stddev_ts": 0.0,
+        "samples_ns": [
+          327896787
+        ],
+        "samples_ts": [
+          97.5917
+        ]
+      },
+      {
+        "build_commit": "e22b0de60",
+        "build_number": 9449,
+        "cpu_info": "AMD Ryzen 7 8845HS w/ Radeon 780M Graphics",
+        "gpu_info": "AMD Radeon 780M Graphics",
+        "backends": "ROCm",
+        "model_filename": "/mnt/512_ssd_internal/vai-llm-tei/llm-models/qwen2.5-coder-7b-instruct-q4_k_m.gguf",
+        "model_type": "qwen2 7B Q4_K - Medium",
+        "model_size": 4677120000,
+        "model_n_params": 7615616512,
+        "n_batch": 2048,
+        "n_ubatch": 512,
+        "n_threads": 8,
+        "cpu_mask": "0x0",
+        "cpu_strict": false,
+        "poll": 50,
+        "type_k": "f16",
+        "type_v": "f16",
+        "n_gpu_layers": 10,
+        "n_cpu_moe": 0,
+        "split_mode": "layer",
+        "main_gpu": 0,
+        "no_kv_offload": false,
+        "flash_attn": -1,
+        "devices": "auto",
+        "tensor_split": "0.00",
+        "tensor_buft_overrides": "none",
+        "use_mmap": true,
+        "use_direct_io": false,
+        "embeddings": false,
+        "no_op_offload": 0,
+        "no_host": false,
+        "fit_target": 0,
+        "fit_min_ctx": 0,
+        "n_prompt": 0,
+        "n_gen": 16,
+        "n_depth": 0,
+        "test_time": "2026-06-02T12:37:13Z",
+        "avg_ns": 2727623452,
+        "stddev_ns": 0,
+        "avg_ts": 5.865912,
+        "stddev_ts": 0.0,
+        "samples_ns": [
+          2727623452
+        ],
+        "samples_ts": [
+          5.86591
+        ]
+      }
+    ]
+  },
+  "summary": {
+    "cpu-aocc": {
+      "prompt_processing_tok_per_s": {
+        "mean": 89.9107,
+        "min": 89.9107,
+        "max": 89.9107,
+        "n": 1
+      },
+      "token_generation_tok_per_s": {
+        "mean": 8.3061,
+        "min": 8.3061,
+        "max": 8.3061,
+        "n": 1
+      }
+    },
+    "vulkan-aocc": {
+      "prompt_processing_tok_per_s": {
+        "mean": 200.654,
+        "min": 200.654,
+        "max": 200.654,
+        "n": 1
+      },
+      "token_generation_tok_per_s": {
+        "mean": 14.3926,
+        "min": 14.3926,
+        "max": 14.3926,
+        "n": 1
+      }
+    },
+    "rocm-aocc": {
+      "prompt_processing_tok_per_s": {
+        "mean": 97.5917,
+        "min": 97.5917,
+        "max": 97.5917,
+        "n": 1
+      },
+      "token_generation_tok_per_s": {
+        "mean": 5.8659,
+        "min": 5.8659,
+        "max": 5.8659,
+        "n": 1
+      }
+    }
+  }
+}
