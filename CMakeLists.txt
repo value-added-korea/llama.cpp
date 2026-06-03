@@ -132,6 +132,14 @@ if (NOT DEFINED LLAMA_BUILD_COMMIT)
 endif()
 set(LLAMA_INSTALL_VERSION 0.0.${LLAMA_BUILD_NUMBER})
 
+# System-specific toolchain information
+if (GGML_HIP)
+    message(STATUS "HIP/ROCM build requested")
+    message(STATUS "  ROCM Installation: ${ROCM_PATH}")
+    message(STATUS "  Expected: ROCM 7.13.0 with HIP 7.13.99004 and AMD Clang 23.0.0")
+    message(STATUS "  Default installation path: /opt/rocm/core-7.13")
+endif()
+
 # override ggml options
 set(GGML_ALL_WARNINGS   ${LLAMA_ALL_WARNINGS})
 set(GGML_FATAL_WARNINGS ${LLAMA_FATAL_WARNINGS})

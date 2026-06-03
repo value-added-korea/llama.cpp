@@ -29,7 +29,19 @@
     { "name": "reldbg",   "hidden": true, "cacheVariables": { "CMAKE_BUILD_TYPE": "RelWithDebInfo" } },
     { "name": "static",   "hidden": true, "cacheVariables": { "GGML_STATIC":      "ON" } },
     { "name": "sycl_f16", "hidden": true, "cacheVariables": { "GGML_SYCL_F16":    "ON" } },
-    { "name": "vulkan",   "hidden": true, "cacheVariables": { "GGML_VULKAN":      "ON" } },
+    { "name": "vulkan",   "hidden": true, "cacheVariables": { "GGML_VULKAN":      "ON",
+                                                              "GGML_CUDA":        "OFF",
+                                                              "GGML_HIP":         "OFF" } },
+
+    {
+        "name": "aocc-base",
+        "hidden": true,
+        "cacheVariables": {
+            "CMAKE_C_COMPILER":   "amdclang",
+            "CMAKE_CXX_COMPILER": "amdclang++",
+            "GGML_CUDA":          "OFF"
+        }
+    },
 
     {
         "name": "x64-windows-llvm", "hidden": true,
@@ -66,6 +78,119 @@
     { "name": "x64-linux-gcc-release", "inherits": [ "base", "x64-linux-gcc", "release" ] },
     { "name": "x64-linux-gcc-reldbg", "inherits": [ "base", "x64-linux-gcc", "reldbg" ] },
     { "name": "x64-linux-gcc+static-release", "inherits": [ "base", "x64-linux-gcc", "release", "static" ] },
+
+    {
+        "name": "rocm-7.13-base",
+        "hidden": true,
+        "generator": "Unix Makefiles",
+        "binaryDir": "${sourceDir}/build-${presetName}",
+        "cacheVariables": {
+            "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+            "CMAKE_INSTALL_RPATH": "$ORIGIN;$ORIGIN/..",
+            "CMAKE_C_COMPILER":   "amdclang",
+            "CMAKE_CXX_COMPILER": "amdclang++",
+            "GGML_CUDA":          "OFF",
+            "GGML_VULKAN":        "OFF",
+            "GGML_HIP":           "ON",
+            "ROCM_PATH":          "/opt/rocm/core-7.13",
+            "GPU_TARGETS":        "gfx1103",
+            "AMDGPU_TARGETS":     "gfx1103"
+        }
+    },
+    {
+        "name": "x64-linux-rocm-debug",
+        "inherits": [ "rocm-7.13-base", "debug" ],
+        "displayName": "Linux x64 ROCM 7.13.0 Debug",
+        "description": "Build for AMD GPU with ROCM 7.13.0 (HIP 7.13.99004, AMD Clang 23.0.0)"
+    },
+    {
+        "name": "x64-linux-rocm-release",
+        "inherits": [ "rocm-7.13-base", "release" ],
+        "displayName": "Linux x64 ROCM 7.13.0 Release",
+        "description": "Build for AMD GPU with ROCM 7.13.0 (HIP 7.13.99004, AMD Clang 23.0.0)"
+    },
+    {
+        "name": "x64-linux-rocm-reldbg",
+        "inherits": [ "rocm-7.13-base", "reldbg" ],
+        "displayName": "Linux x64 ROCM 7.13.0 RelWithDebInfo",
+        "description": "Build for AMD GPU with ROCM 7.13.0 (HIP 7.13.99004, AMD Clang 23.0.0)"
+    },
+
+    {
+        "name": "x64-linux-vulkan-debug",
+        "inherits": [ "base", "vulkan", "debug" ],
+        "displayName": "Linux x64 Vulkan Debug",
+        "description": "Build for Vulkan (AMD Radeon 780M iGPU)"
+    },
+    {
+        "name": "x64-linux-vulkan-release",
+        "inherits": [ "base", "vulkan", "release" ],
+        "displayName": "Linux x64 Vulkan Release",
+        "description": "Build for Vulkan (AMD Radeon 780M iGPU)"
+    },
+
+    {
+        "name": "cpu-aocc",
+        "inherits": [ "base", "aocc-base", "release" ],
+        "displayName": "Linux x64 CPU AOCC Release (AMD Ryzen 7 8845HS)",
+        "description": "CPU-only build with AOCC (amdclang). No GPU backend.",
+        "cacheVariables": {
+            "GGML_VULKAN": "OFF",
+            "GGML_HIP":    "OFF"
+        }
+    },
+    {
+        "name": "vulkan-aocc",
+        "inherits": [ "base", "aocc-base", "vulkan", "release" ],
+        "displayName": "Linux x64 Vulkan AOCC Release (AMD Radeon 780M)",
+        "description": "Vulkan GPU build with AOCC targeting AMD Radeon 780M (gfx1103). VK_ICD_FILENAMES must be set to RADV ICD before running."
+    },
+    {
+        "name": "rocm-aocc",
+        "inherits": [ "rocm-7.13-base", "release" ],
+        "displayName": "Linux x64 ROCm AOCC Release (AMD Radeon 780M gfx1103)",
+        "description": "ROCm/HIP build with AOCC targeting gfx1103 (AMD Radeon 780M). ROCR_VISIBLE_DEVICES=0 must be set before running."
+    },
+
+    {
+        "name": "cuda-aocc-base",
+        "hidden": true,
+        "generator": "Ninja",
+        "binaryDir": "${sourceDir}/build-${presetName}",
+        "cacheVariables": {
+            "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+            "CMAKE_INSTALL_RPATH":           "$ORIGIN;$ORIGIN/..",
+            "CMAKE_C_COMPILER":              "/opt/AMD/aocc-compiler-5.2.0/bin/clang",
+            "CMAKE_CXX_COMPILER":            "/opt/AMD/aocc-compiler-5.2.0/bin/clang++",
+            "CMAKE_CUDA_COMPILER":           "/usr/local/cuda-13.3/bin/nvcc",
+            "CMAKE_CUDA_HOST_COMPILER":      "/opt/AMD/aocc-compiler-5.2.0/bin/clang++",
+            "GGML_CUDA":                     "ON",
+            "GGML_HIP":                      "OFF",
+            "GGML_VULKAN":                   "OFF",
+            "CMAKE_CUDA_ARCHITECTURES":      "89",
+            "BUILD_SHARED_LIBS":             "OFF",
+            "CMAKE_C_FLAGS":                 "-march=znver4 -O3",
+            "CMAKE_CXX_FLAGS":               "-march=znver4 -O3"
+        }
+    },
+    {
+        "name": "cuda-aocc-debug",
+        "inherits": [ "cuda-aocc-base", "debug" ],
+        "displayName": "Linux x64 CUDA + AOCC Debug",
+        "description": "NVIDIA GPU (CUDA) build with AOCC 5.2.0 as host compiler, debug symbols."
+    },
+    {
+        "name": "cuda-aocc-release",
+        "inherits": [ "cuda-aocc-base", "release" ],
+        "displayName": "Linux x64 CUDA + AOCC Release",
+        "description": "NVIDIA GPU (CUDA) build with AOCC 5.2.0 as host compiler, optimized."
+    },
+    {
+        "name": "cuda-aocc-reldbg",
+        "inherits": [ "cuda-aocc-base", "reldbg" ],
+        "displayName": "Linux x64 CUDA + AOCC RelWithDebInfo",
+        "description": "NVIDIA GPU (CUDA) build with AOCC 5.2.0 as host compiler, optimized with debug info."
+    },
 
     { "name": "arm64-windows-llvm-debug", "inherits": [ "base", "arm64-windows-llvm", "debug" ] },
     { "name": "arm64-windows-llvm-release", "inherits": [ "base", "arm64-windows-llvm", "reldbg" ] },
